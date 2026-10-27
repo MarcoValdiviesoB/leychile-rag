@@ -35,6 +35,23 @@ El grafo recupera los artículos más relevantes, redacta la respuesta **citando
 los artículos usados y, en `verify`, degrada a *"no encontrado en el corpus"* si
 no hubo recuperación — anti-alucinación.
 
+## Demo (salida real)
+
+```text
+P: ¿Con cuánta anticipación debe avisar un trabajador si renuncia?
+R: Un trabajador debe avisar a su empleador con treinta días de anticipación,
+   a lo menos, si decide renunciar. Esto está establecido en el Art. 159 del
+   Código del Trabajo.
+   Citas: Código del Trabajo Art. 159, Art. 7, Art. 1
+
+P: ¿Qué es un contrato individual de trabajo?
+R: Un contrato individual de trabajo es una convención por la cual el empleador
+   y el trabajador se obligan recíprocamente, donde el trabajador se compromete
+   a prestar servicios personales bajo dependencia y subordinación del empleador,
+   y este último a pagar una remuneración determinada. (Art. 7 del Código del Trabajo).
+   Citas: Código del Trabajo Art. 7, Art. 159, Art. 1
+```
+
 ## Stack
 Python · LangGraph · LangChain · OpenAI embeddings · Postgres + pgvector (Neon) ·
 FastAPI · MCP (Model Context Protocol).
@@ -55,6 +72,26 @@ uvicorn leychile_rag.api:app --reload
 curl -s localhost:8000/ask -H 'content-type: application/json' \
   -d '{"pregunta":"¿Con cuánta anticipación debe avisar un trabajador si renuncia?"}'
 ```
+
+### Con Docker (imagen en GHCR)
+
+Imagen pública publicada por CI en GitHub Container Registry (bring-your-own-key):
+
+```bash
+# Poblar el corpus una vez (seed) contra tu DB
+docker run --rm \
+  -e OPENAI_API_KEY=sk-... -e DATABASE_URL=postgresql://... \
+  ghcr.io/marcovaldiviesob/leychile-rag:latest \
+  python scripts/run_ingest.py seed
+
+# Levantar la API
+docker run -p 8000:8000 \
+  -e OPENAI_API_KEY=sk-... -e DATABASE_URL=postgresql://... \
+  ghcr.io/marcovaldiviesob/leychile-rag:latest
+```
+
+Cada usuario trae su propia `OPENAI_API_KEY` y su Postgres con pgvector (Neon):
+no hay endpoint público que gaste tu cuota ni exponga tu key.
 
 ### Como servidor MCP
 
