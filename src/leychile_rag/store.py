@@ -1,14 +1,15 @@
 """Vector store sobre Postgres + pgvector (pensado para Neon)."""
 from __future__ import annotations
 
-import json
 import psycopg
+from pgvector import Vector
 from pgvector.psycopg import register_vector
 
 from .config import settings
 
-SCHEMA = """
-CREATE EXTENSION IF NOT EXISTS vector;
+EXTENSION = "CREATE EXTENSION IF NOT EXISTS vector;"
+
+TABLE = """
 CREATE TABLE IF NOT EXISTS articulos (
     id          TEXT PRIMARY KEY,         -- ej: codigo-trabajo:art-22
     norma       TEXT NOT NULL,            -- ej: "Código del Trabajo"
@@ -24,15 +25,23 @@ CREATE INDEX IF NOT EXISTS articulos_embedding_idx
 """
 
 
+def _raw_connect() -> psycopg.Connection:
+    """Conexión sin registrar el tipo vector (para DDL inicial)."""
+    return psycopg.connect(settings.database_url)
+
+
 def connect() -> psycopg.Connection:
+    """Conexión con el tipo vector registrado (la extensión ya debe existir)."""
     conn = psycopg.connect(settings.database_url)
     register_vector(conn)
     return conn
 
 
 def init_schema() -> None:
-    with connect() as conn, conn.cursor() as cur:
-        cur.execute(SCHEMA % {"dim": settings.embedding_dim})
+    with _raw_connect() as conn, conn.cursor() as cur:
+        cur.execute(EXTENSION)
+        conn.commit()
+        cur.execute(TABLE % {"dim": settings.embedding_dim})
         conn.commit()
 
 
@@ -59,5 +68,5 @@ def search(embedding, k: int = 5) -> list[dict]:
         LIMIT %(k)s;
     """
     with connect() as conn, conn.cursor(row_factory=psycopg.rows.dict_row) as cur:
-        cur.execute(sql, {"e": embedding, "k": k})
+        cur.execute(sql, {"e": Vector(embedding), "k": k})
         return cur.fetchall()
