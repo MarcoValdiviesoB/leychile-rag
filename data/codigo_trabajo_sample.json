@@ -1,0 +1,32 @@
+[
+  {
+    "id": "codigo-trabajo:art-7",
+    "norma": "Código del Trabajo",
+    "id_norma": "207436",
+    "articulo": "7",
+    "titulo": "Del contrato individual de trabajo",
+    "texto": "Artículo 7. Contrato individual de trabajo es una convención por la cual el empleador y el trabajador se obligan recíprocamente, éste a prestar servicios personales bajo dependencia y subordinación del primero, y aquél a pagar por estos servicios una remuneración determinada.",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=207436",
+    "_nota": "Muestra ilustrativa (seed) para correr el demo. No es fuente legal: la ingesta real usa LeyChile/BCN. Verificar texto vigente."
+  },
+  {
+    "id": "codigo-trabajo:art-159",
+    "norma": "Código del Trabajo",
+    "id_norma": "207436",
+    "articulo": "159",
+    "titulo": "Terminación del contrato de trabajo",
+    "texto": "Artículo 159. El contrato de trabajo terminará en los siguientes casos: 1. Mutuo acuerdo de las partes; 2. Renuncia del trabajador, dando aviso a su empleador con treinta días de anticipación, a lo menos; 3. Muerte del trabajador; 4. Vencimiento del plazo convenido en el contrato; 5. Conclusión del trabajo o servicio que dio origen al contrato; 6. Caso fortuito o fuerza mayor.",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=207436",
+    "_nota": "Muestra ilustrativa (seed). Verificar texto vigente en LeyChile."
+  },
+  {
+    "id": "codigo-trabajo:art-1",
+    "norma": "Código del Trabajo",
+    "id_norma": "207436",
+    "articulo": "1",
+    "titulo": "Ámbito de aplicación",
+    "texto": "Artículo 1. Las relaciones laborales entre los empleadores y los trabajadores se regularán por este Código y por sus leyes complementarias.",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=207436",
+    "_nota": "Muestra ilustrativa (seed). Verificar texto vigente en LeyChile."
+  }
+]

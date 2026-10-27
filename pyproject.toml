@@ -1,0 +1,9 @@
+[project]
+name = "leychile-rag"
+version = "0.1.0"
+description = "Agentic RAG sobre la legislación chilena (MVP: Código del Trabajo) con LangGraph, pgvector y MCP"
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
